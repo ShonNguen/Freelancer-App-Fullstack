@@ -1,0 +1,29 @@
+{
+  "name": "online-portfolio-fullstack",
+  "version": "1.0.0",
+  "description": "app for freelancing architectural visualization",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShonNguen/Freelancer-App-Fullstack.git"
+  },
+  "author": "Shon Nguen",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ShonNguen/Freelancer-App-Fullstack/issues"
+  },
+  "homepage": "https://github.com/ShonNguen/Freelancer-App-Fullstack#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
