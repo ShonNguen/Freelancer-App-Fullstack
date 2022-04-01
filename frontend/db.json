@@ -1,0 +1,107 @@
+{
+  "users": [
+    {
+      "firstName": "Shon",
+      "lastName": "Nguen",
+      "email": "nguenshon@gmail.com",
+      "username": "ShonNguen",
+      "password": "Fishface93",
+      "userGender": "male",
+      "userRole": "freelancer",
+      "dateOfRegistry": "23/3/2022 - 17:5",
+      "id": 1
+    },
+    {
+      "firstName": "Leah",
+      "lastName": "Gregory",
+      "email": "leah.gregory@example.com",
+      "username": "leah.gregory",
+      "password": "kotaku1234",
+      "userGender": "female",
+      "userRole": "admin",
+      "dateOfRegistry": "24/3/2022 - 10:21",
+      "id": 2
+    },
+    {
+      "firstName": "Antonio",
+      "lastName": "Ross",
+      "email": "antonio.ross@example.com",
+      "username": "antonio.ross",
+      "password": "cheerleaers123",
+      "userGender": "male",
+      "userRole": "employer",
+      "dateOfRegistry": "24/3/2022 - 11:11",
+      "id": 3
+    },
+    {
+      "firstName": "Cory",
+      "lastName": "Watts",
+      "email": "cory.watts@example.com",
+      "username": "cory.watts",
+      "password": "cory.watts24680",
+      "userGender": "male",
+      "userRole": "freelancer",
+      "dateOfRegistry": "24/3/2022 - 11:22",
+      "id": 4
+    },
+    {
+      "firstName": "Dana",
+      "lastName": "Wells",
+      "email": "dana.wells@example.com",
+      "username": "dana.wells94",
+      "password": "emily1213456",
+      "userGender": "female",
+      "userRole": "employer",
+      "dateOfRegistry": "24/3/2022 - 11:26",
+      "id": 5
+    },
+    {
+      "firstName": "Serenity",
+      "lastName": "Henderson",
+      "email": "serenity.henderson@example.com",
+      "username": "serenity.henderson",
+      "password": "phrases1234",
+      "userGender": "female",
+      "userRole": "freelancer",
+      "dateOfRegistry": "24/3/2022 - 11:30",
+      "id": 6
+    },
+    {
+      "firstName": "Andrew",
+      "lastName": "Baker",
+      "email": "andrew.baker@example.com",
+      "username": "andrew.baker",
+      "password": "kingkong1234",
+      "userGender": "male",
+      "userRole": "freelancer",
+      "dateOfRegistry": "24/3/2022 - 11:34",
+      "id": 7
+    },
+    {
+      "newUser": {
+        "firstName": "Jonathan ",
+        "lastName": "Horton",
+        "email": "jonathan.horton@example.com",
+        "username": "jonathan.horton",
+        "password": "galaxy123456",
+        "userGender": "male",
+        "userRole": "employer",
+        "dateOfRegistry": "29/3/2022 - 7:28"
+      },
+      "id": 8
+    },
+    {
+      "firstName": "Jonathan ",
+      "lastName": "Horton",
+      "email": "jonathan.horton@example.com",
+      "username": "jonathan.horton",
+      "password": "galaxy123456",
+      "userGender": "male",
+      "userRole": "employer",
+      "dateOfRegistry": "29/3/2022 - 7:32",
+      "id": 9
+    }
+  ],
+  "projects": [],
+  "jobs": []
+}
