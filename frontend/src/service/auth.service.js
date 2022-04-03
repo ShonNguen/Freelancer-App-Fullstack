@@ -1,13 +1,8 @@
 import axios from 'axios';
 
 const API_URL = 'users/';
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-const signUp = async (user) => {
-  // const header = {
-  //   headers: {
 
-  //   }
-  // }
+const signUp = async (user) => {
 
   const response = await axios.post(API_URL + 'signup', user);
 
@@ -18,8 +13,8 @@ const signUp = async (user) => {
   return response.data;
 };
 
-const login = async (username, password) => {
-  const response = await axios.post(API_URL + 'login', { username, password });
+const login = async (userData) => {
+  const response = await axios.post(API_URL + 'login', userData);
 
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data));

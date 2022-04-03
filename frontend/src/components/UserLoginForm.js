@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 //components
 import { login } from '../slices/userAuth';
-import {clearMessage} from '../slices/message';
 
 //form
 import { useForm } from 'react-hook-form';
@@ -48,38 +47,30 @@ export default function UserLoginForm(props) {
         resolver: yupResolver(schema)
     });
 
-    const [loading, setLoading] = useState(false);
-
-    const { isLoggedIn } = useSelector((state) => state.auth);
-    const { message } = useSelector((state) => state.message);
-
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
+    const { user, isLoading, isError, isSuccess, message } = useSelector(
+        (state) => state.auth
+    );
+
     useEffect(() => {
-        dispatch(clearMessage());
-    }, [dispatch]);
+        if(isSuccess) {
+            navigate(`/profile/:${user.id}`); 
+        }
+    },[user, isLoading, isError, isSuccess, message, dispatch]);
 
     const onLoginSubmit = (data) => {
         const username = data.username;
         const password = data.password;
-        setLoading(true);
 
-        dispatch(login({ username, password }))
-            .unwrap()
-            .then(() => {
-                props.history.push("/profile");
-                window.location.reload();
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+        const userData = {
+            username,
+            password
+        }
+        
+        dispatch(login(userData));
     };
-
-    if (isLoggedIn) {
-        navigate('/profile', { replace: true });
-    }
-
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>

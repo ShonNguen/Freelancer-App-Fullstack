@@ -32,9 +32,9 @@ export const signUp = createAsyncThunk(
 
 export const login = createAsyncThunk(
     'auth/login',
-    async ({ username, password }, thunkAPI) => {
+    async (userData, thunkAPI) => {
         try {
-            const data = await AuthService.login(username, password);
+            const data = await AuthService.login(userData);
             return { user: data };
         } catch (error) {
             const message =
