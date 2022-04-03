@@ -2,15 +2,33 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import AuthService from "../service/auth.service";
 
-const user = JSON.parse(localStorage.getItem("user")); 
+const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
-    user: user ? user : null, 
-    isError: false, 
-    isSuccess: false, 
-    isLoading: false, 
+    user: user ? user : null,
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
     message: ''
 };
+
+export const getAllUsers = createAsyncThunk(
+    'auth/getUsers',
+    async (thunkAPI) => {
+        try {
+            const response = await AuthService.getAllUsers();
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
 
 export const signUp = createAsyncThunk(
     'auth/signUp',
@@ -61,48 +79,60 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         reset: (state) => {
-            state.isLoading = false; 
-            state.isSuccess = false; 
-            state.isError = false; 
-            state.message = ''; 
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = false;
+            state.message = '';
         }
     },
     extraReducers: {
         [signUp.pending]: (state, action) => {
-            state.isLoading = true; 
+            state.isLoading = true;
         },
         [signUp.fulfilled]: (state, action) => {
-            state.isLoading = false; 
-            state.isSuccess = true; 
-            state.user = action.payload;  
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.user = action.payload;
         },
         [signUp.rejected]: (state, action) => {
-            state.isLoading = false; 
-            state.isError = true; 
+            state.isLoading = false;
+            state.isError = true;
             state.message = action.payload;
             state.user = null;
         },
         [login.pending]: (state, action) => {
-            state.isLoading = true;  
+            state.isLoading = true;
         },
         [login.fulfilled]: (state, action) => {
-            state.isLoading = false; 
-            state.isSuccess = true; 
-            state.user = action.payload;
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.user = action.payload.user;
         },
         [login.rejected]: (state, action) => {
-            state.isLoading = false; 
-            state.isError = true; 
+            state.isLoading = false;
+            state.isError = true;
             state.message = action.payload;
             state.user = null;
         },
         [logout.fulfilled]: (state, action) => {
             state.user = null;
         },
+        [getAllUsers.pending]: (state, action) => {
+            state.isLoading = true; 
+        },
+        [getAllUsers.fulfilled]: (state, action) => {
+            state.isLoading = false; 
+            state.isSuccess = true; 
+        },
+        [getAllUsers.rejected]: (state, action) => {
+            state.isLoading = false; 
+            state.isError = true; 
+            state.message = action.payload;
+        },
     },
 });
 
 const { reducer } = authSlice;
 
-export const {reset} = authSlice.actions; 
+export const { reset } = authSlice.actions;
 export default reducer;

@@ -56,7 +56,7 @@ export default function UserLoginForm(props) {
 
     useEffect(() => {
         if(isSuccess) {
-            navigate(`/profile/:${user.id}`); 
+            navigate(`/profile`); 
         }
     },[user, isLoading, isError, isSuccess, message, dispatch]);
 
@@ -133,7 +133,7 @@ export default function UserLoginForm(props) {
                         </Link>
                         <Grid container>
                             <Grid item>
-                                <Link to='/sign-up-form' >
+                                <Link to='/register' >
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

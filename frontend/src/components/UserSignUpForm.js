@@ -63,6 +63,7 @@ export default function UserSignUpForm(props) {
     const { isLoading, isError, isSuccess, message } = useSelector(
         (state) => state.auth
     );
+    
     const dispatch = useDispatch();
 
     let navigate = useNavigate();

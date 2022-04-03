@@ -2,6 +2,12 @@ import axios from 'axios';
 
 const API_URL = 'users/';
 
+const getAllUsers = async() => {
+  const response = await axios.get(API_URL + 'getAll'); 
+
+  return response.data; 
+}
+
 const signUp = async (user) => {
 
   const response = await axios.post(API_URL + 'signup', user);

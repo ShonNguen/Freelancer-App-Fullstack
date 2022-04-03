@@ -68,9 +68,11 @@ const loginUser = asyncHandler(async (req, res) => {
     if (user && user.password === password) {
         res.json({
             _id: user.id,
-            name: user.name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             username: user.username,
+            userRole: user.userRole,
             token: generateToken(user.id)
         })
     } else {
