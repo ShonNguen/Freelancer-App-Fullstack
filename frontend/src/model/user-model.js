@@ -7,7 +7,6 @@ export class User {
         password,
         userGender,
         userRole,
-        dateOfRegistry,
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -16,6 +15,5 @@ export class User {
         this.password = password;
         this.userGender = userGender;
         this.userRole = userRole; 
-        this.dateOfRegistry = dateOfRegistry;
     }
 }

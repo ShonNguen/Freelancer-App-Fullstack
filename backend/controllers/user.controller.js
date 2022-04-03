@@ -3,13 +3,27 @@ const asyncHandler = require('express-async-handler');
 
 const User = require('../models/userModel');
 
+const getAllUsers = asyncHandler(async(req, res) => {
+    const users = await User.find(); 
+
+    res.status(200).json(users);
+});
+
 // Sign up user
 // POST api/users/
 // public
 const signupUser = asyncHandler(async (req, res) => {
-    const { name, email, password, username } = req.body;
+    const {
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        userGender,
+        userRole
+    } = req.body;
 
-    if (!name || !email || !password || !username) {
+    if (!email || !password || !username) {
         res.status(400);
         throw new Error('Please add all fields!');
     }
@@ -21,10 +35,13 @@ const signupUser = asyncHandler(async (req, res) => {
     }
 
     const newUser = await User.create({
-        name,
+        firstName,
+        lastName,
         email,
+        username,
         password,
-        username
+        userGender,
+        userRole
     });
 
     if (newUser) {
@@ -66,10 +83,10 @@ const loginUser = asyncHandler(async (req, res) => {
 // GET api/users/login/me
 // private
 const getUser = asyncHandler(async (req, res) => {
-    const { _id, name, username, email } = await User.findById(req.user.id); 
+    const { _id, name, username, email } = await User.findById(req.user.id);
 
     res.status(200).json({
-        id: _id, 
+        id: _id,
         name,
         email,
         username
@@ -84,6 +101,7 @@ const generateToken = (id) => {
 }
 
 module.exports = {
+    getAllUsers,
     signupUser,
     loginUser,
     getUser

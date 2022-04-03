@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 //redux
-import { signUp } from '../slices/userAuth';
-import { clearMessage } from '../slices/message';
+import { signUp, reset } from '../slices/userAuth';
 import { useDispatch, useSelector } from 'react-redux';
 
 //components
@@ -61,40 +60,28 @@ export default function UserSignUpForm(props) {
     const [gender, setGender] = useState('');
     const [role, setRole] = useState('');
 
-    const [successful, setSuccessful] = useState(false);
-
-    const { message } = useSelector((state) => state.message);
+    const { isLoading, isError, isSuccess, message } = useSelector(
+        (state) => state.auth
+    );
     const dispatch = useDispatch();
 
     let navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(clearMessage());
-    }, [dispatch]);
+        if (isSuccess) {
+            navigate('/register/success');
+        }
+        dispatch(reset());
+    }, [isError, isSuccess, message, navigate, dispatch]);
 
     function onSignUpFormSubmit(data) {
-        const currentDate = new Date();
-        const dateOfRegistry = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} - ${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        // const currentDate = new Date();
+        // const dateOfRegistry = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} - ${currentDate.getHours()}:${currentDate.getMinutes()}`;
         const newUser = new User(
-            data.firstName, data.lastName, data.email, data.username, data.password, gender, role, dateOfRegistry
+            data.firstName, data.lastName, data.email, data.username, data.password, gender, role
         );
 
-        setSuccessful(false);
-
-        dispatch(signUp(newUser))
-            .unwrap()
-            .then(() => {
-                props.history.push('/register/success');
-                window.location.reload();
-                setSuccessful(true);
-            })
-            .catch(() => {
-                setSuccessful(false);
-            })
-    }
-
-    if (successful) {
-        navigate('/register/success', { replace: true });
+        dispatch(signUp(newUser));
     }
 
     return (
@@ -242,12 +229,6 @@ export default function UserSignUpForm(props) {
                                     </Button>
                                 </Link>
                             </Grid>
-
-                            {message && (
-                                <Grid item xs={12}>
-                                    {message}
-                                </Grid>
-                            )}
 
                         </Grid>
                     </Box>
