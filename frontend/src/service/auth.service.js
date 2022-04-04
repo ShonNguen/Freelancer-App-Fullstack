@@ -37,6 +37,7 @@ const authService = {
   signUp,
   login,
   logout,
+  getAllUsers
 };
 
 export default authService;

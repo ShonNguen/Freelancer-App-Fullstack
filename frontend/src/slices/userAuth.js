@@ -5,6 +5,7 @@ import AuthService from "../service/auth.service";
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
+    users: [],
     user: user ? user : null,
     isError: false,
     isSuccess: false,
@@ -14,10 +15,9 @@ const initialState = {
 
 export const getAllUsers = createAsyncThunk(
     'auth/getUsers',
-    async (thunkAPI) => {
+    async (_, thunkAPI) => {
         try {
-            const response = await AuthService.getAllUsers();
-            return response;
+            return await AuthService.getAllUsers();
         } catch (error) {
             const message =
                 (error.response &&
@@ -123,6 +123,7 @@ const authSlice = createSlice({
         [getAllUsers.fulfilled]: (state, action) => {
             state.isLoading = false; 
             state.isSuccess = true; 
+            state.users = action.payload;
         },
         [getAllUsers.rejected]: (state, action) => {
             state.isLoading = false; 
