@@ -16,13 +16,22 @@ const getAllJobs = asyncHandler(async (req, res) => {
 });
 
 const postJob = asyncHandler(async (req, res) => {
-    if (!req.body.text) {
+    const {
+        title,
+        description, 
+        location, 
+        images
+    } = req.body; 
+    if (!title || !description || !location || !images) {
         res.status(400);
-        throw new Error('Please add a text field');
+        throw new Error('Please add all fields!');
     }
 
     const job = await Job.create({
-        text: req.body.text,
+        title,
+        description,
+        location,
+        images,
         user: req.user.id
     })
 

@@ -6,10 +6,22 @@ const jobSchema = mongoose.Schema({
         required: true, 
         ref: 'User'
     },
-    text: {
+    title: {
         type: String, 
-        required: [true, 'Please add a text value']
-    }
+        required: [true, 'Please add a title value']
+    },
+    description: {
+        type: String, 
+        required: [true, 'Please add a description']
+    },
+    location: {
+        type: String, 
+        required: [true, 'Please add a location']
+    },
+    images: {
+        type: Number, 
+        required: [true, 'Please add a images count']
+    },
 }, {
     timestamps: true, 
 })
