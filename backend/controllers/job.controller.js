@@ -9,6 +9,12 @@ const getJobs = asyncHandler(async (req, res) => {
     res.status(200).json(jobs);
 })
 
+const getAllJobs = asyncHandler(async (req, res) => {
+    const jobs = await Job.find(); 
+
+    res.status(200).json(jobs);
+});
+
 const postJob = asyncHandler(async (req, res) => {
     if (!req.body.text) {
         res.status(400);
@@ -20,7 +26,7 @@ const postJob = asyncHandler(async (req, res) => {
         user: req.user.id
     })
 
-    res.status(200).json(job);
+    res.status(201).json(job);
 })
 
 const putJob = asyncHandler(async (req, res) => {
@@ -77,6 +83,7 @@ const deleteJob = asyncHandler(async (req, res) => {
 
 module.exports = {
     getJobs,
+    getAllJobs,
     postJob,
     putJob,
     deleteJob

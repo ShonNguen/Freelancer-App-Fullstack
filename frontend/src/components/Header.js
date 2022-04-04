@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../slices/userAuth';
+import { logout, reset } from '../slices/userAuth';
 
 import { Typography, AppBar, Box, Toolbar, Avatar, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -27,6 +27,8 @@ export default function Header() {
 
     function handleLogout() {
         dispatch(logout());
+        dispatch(reset()); 
+
     }
 
     return (

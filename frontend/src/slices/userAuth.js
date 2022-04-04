@@ -53,7 +53,7 @@ export const login = createAsyncThunk(
     async (userData, thunkAPI) => {
         try {
             const data = await AuthService.login(userData);
-            return { user: data };
+            return data;
         } catch (error) {
             const message =
                 (error.response &&
@@ -106,7 +106,7 @@ const authSlice = createSlice({
         [login.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.isSuccess = true;
-            state.user = action.payload.user;
+            state.user = action.payload;
         },
         [login.rejected]: (state, action) => {
             state.isLoading = false;
