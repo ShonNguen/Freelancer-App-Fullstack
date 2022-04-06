@@ -148,9 +148,7 @@ export const jobSlice = createSlice({
             state.isLoading = false; 
             state.isSuccess = true; 
             state.userJobs = state.userJobs.filter(
-                (job) => {
-                    job.id !== action.payload.id; 
-                }
+                (job) => job.id !== action.payload.id 
             ); 
         },
         [deleteJob.rejected]: (state, action) => {

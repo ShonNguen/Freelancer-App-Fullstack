@@ -11,7 +11,6 @@ const getJobs = asyncHandler(async (req, res) => {
 
 const getAllJobs = asyncHandler(async (req, res) => {
     const jobs = await Job.find(); 
-
     res.status(200).json(jobs);
 });
 

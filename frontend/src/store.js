@@ -8,6 +8,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 import messageReducer from "./slices/message";
 import authReducer from "./slices/userAuth";
+import jobReducer from './slices/jobsSlice'; 
 
 
 const persistConfig = {
@@ -22,6 +23,7 @@ const persistConfig = {
 // }
 
 const rootReducer = combineReducers({
+  jobs: jobReducer,
   auth: authReducer,
   message: messageReducer
 });
