@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const colors = require('colors');
 const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middleware/error.middleware');
@@ -8,12 +9,15 @@ const port = process.env.PORT || 5000;
 connectDB();
 
 const app = express();
+// //cors problem? 
+// app.use(cors); 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/jobs', require('./routes/jobs.routes'));
 app.use('/api/users', require('./routes/user.routes'));
+app.use('/api/projects', require('./routes/project.routes'));
 
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
