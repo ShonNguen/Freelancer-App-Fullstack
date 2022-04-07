@@ -9,7 +9,7 @@ import CardJobs from './CardJobs';
 //material ui
 import { Container, CssBaseline, Grid } from '@mui/material';
 
-export default function TabPanAllJobs() {
+export default function TabPanUserJobs() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -35,9 +35,11 @@ export default function TabPanAllJobs() {
         <Container>
             <CssBaseline />
             <Grid container spacing={2}>
-                {allJobs.map(job => (
+                {allJobs
+                .filter(job => job.user === user._id)
+                .map(job => (
                     <Grid item md={4} xs={6} key={job.id}>
-                        <CardJobs job={job} key={job.id}/>
+                        <CardJobs job={job} />
                     </Grid>
                 ))}
             </Grid>
