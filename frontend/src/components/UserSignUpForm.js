@@ -76,8 +76,6 @@ export default function UserSignUpForm(props) {
     }, [isError, isSuccess, message, navigate, dispatch]);
 
     function onSignUpFormSubmit(data) {
-        // const currentDate = new Date();
-        // const dateOfRegistry = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} - ${currentDate.getHours()}:${currentDate.getMinutes()}`;
         const newUser = new User(
             data.firstName, data.lastName, data.email, data.username, data.password, gender, role
         );

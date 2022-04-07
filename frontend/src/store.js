@@ -6,9 +6,11 @@ import {
   REGISTER, REHYDRATE
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
 import messageReducer from "./slices/message";
 import authReducer from "./slices/userAuth";
 import jobReducer from './slices/jobsSlice'; 
+import projectReducer from './slices/projectsSlice'; 
 
 
 const persistConfig = {
@@ -17,22 +19,15 @@ const persistConfig = {
     storage
 };
 
-// const reducer = {
-//   auth: authReducer,
-//   message: messageReducer
-// }
-
 const rootReducer = combineReducers({
-  jobs: jobReducer,
   auth: authReducer,
+  jobs: jobReducer,
+  projects: projectReducer,
   message: messageReducer
 });
 
+//store the storage on local storage
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-// const store = configureStore({
-//   reducer: persistedReducer,
-//   devTools: true,
-// })
 
 const store = configureStore({
   reducer: persistedReducer,

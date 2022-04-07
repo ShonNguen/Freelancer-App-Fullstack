@@ -5,6 +5,7 @@ import AppFooter from '../components/Footer';
 import Header from '../components/Header';
 import TabPanelsAdmin from '../components/TabPanelsAdmin';
 import TabPanelsEmployer from '../components/TabPanelsEmployer';
+import TabPanelsFreelancer from '../components/TabPanelsFreelancer';
 
 export default function UserLoginPage() {
     const { user } = useSelector((state) => state.auth);
@@ -17,7 +18,9 @@ export default function UserLoginPage() {
                 return <TabPanelsAdmin />;
             case 'employer':
                 return <TabPanelsEmployer />;
-                
+            case 'freelancer':
+                return <TabPanelsFreelancer />;
+
         }
     }
 
