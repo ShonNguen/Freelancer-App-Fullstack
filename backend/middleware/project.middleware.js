@@ -1,14 +1,12 @@
 const util = require('util');
 const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
-const dbConfig = require('../config/db');
 
 let storage = new GridFsStorage({
-    url: dbConfig.url + dbConfig.database,
+    url: process.env.MONGO_URI,
     //how to establish the connection
-    options: { useNewUrlParser: true, useUnifiedTopology: true },
     file: (req, file) => {
-        const match = ['image/png', 'image/jpeg'];
+        const match = ['image/png', 'image/jpeg', 'image/jpg'];
 
         //make sure that the duplicates never occur
         if (match.indexOf(file.mimetype) === -1) {
@@ -17,13 +15,12 @@ let storage = new GridFsStorage({
         }
 
         return {
-            //bucketname - where to save it? 
-            bucketName: dbConfig,
+            bucketName: 'projects',
             filename: `${Date.now()}-SN-${file.originalname}`
         }
     }
-}); 
+});
 
-let uploadFiles = multer({storage: storage}).array("file", 10); 
-let uploadFilesMiddleware = util.promisify(uploadFiles); 
+let uploadFiles = multer({storage: storage}).array("file", 10);
+let uploadFilesMiddleware = util.promisify(uploadFiles);
 module.exports = uploadFilesMiddleware; 

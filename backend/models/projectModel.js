@@ -14,8 +14,12 @@ const projectSchema = mongoose.Schema({
         type: String, 
         required: [true, 'Please add a description']
     },
+    location: {
+        type: String, 
+        required: [true, 'Please add a location']
+    },
     images: {
-        type: [Buffer], 
+        type: [String], 
         required: [true, 'Please add a images count']
     },
 }, {

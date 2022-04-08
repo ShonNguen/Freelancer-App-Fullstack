@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { reset } from '../slices/projectsSlice';
+import { reset, createNewProject } from '../slices/projectsSlice';
 
 //form
 import { useForm } from 'react-hook-form';
@@ -27,12 +27,12 @@ const schema = yup.object({
     title: yup.string().required('No title provided!'),
     description: yup.string().required('No description provided!'),
     location: yup.string().required('No location provided!'),
-    images: yup
-        .mixed()
-        .required('Please provide images!')
+    // images: yup
+    //     .mixed()
+    //     .required('Please provide images!')
     // .test("fileFormat",
     //     "Unsupported Format",
-    //     value => value && SUPPORTED_FORMAT.includes(value.type)),
+    //     value => value && SUPPORTED_FORMAT.includ    es(value.type)),
 }).required();
 
 const Input = styled('input')({
@@ -81,6 +81,18 @@ export default function TabPanelsFreelancer() {
         dispatch(reset());
     }, [isError, isSuccess, message, dispatch]);
 
+    function onProjectFormSubmit(data) {
+        const {title, description, location} = data; 
+        const newProject = {
+            title, 
+            description, 
+            location, 
+            images: files
+        }; 
+        dispatch(createNewProject(newProject));
+
+    }
+
 
     return (
         <Container component='main' maxWidth='sm'>
@@ -102,8 +114,8 @@ export default function TabPanelsFreelancer() {
                     </Typography>
 
                     <Box
-                        component='form' sx={{ mt: 3 }}
-                    // onSubmit={handleSubmit(onProjectFormSubmit)}
+                        component='form' encType='multipart/form-data' sx={{ mt: 3 }}
+                        onSubmit={handleSubmit(onProjectFormSubmit)}
                     >
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
@@ -148,7 +160,7 @@ export default function TabPanelsFreelancer() {
                             </Grid>
                             <Grid item xs={12}
                                 sx={{
-                                    border: 0.5, 
+                                    border: 0.5,
                                     borderColor: '#bdbdbd', borderStyle: 'dashed', borderRadius: 3,
                                     ml: 2, mt: 2
                                 }}>

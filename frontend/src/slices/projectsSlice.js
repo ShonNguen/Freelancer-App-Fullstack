@@ -26,32 +26,41 @@ export const createNewProject = createAsyncThunk(
             return thunkAPI.rejectWithValue(message)
         }
     }
-); 
+);
 
 export const projectSlice = createSlice({
-    name: 'project', 
-    initialState, 
+    name: 'project',
+    initialState,
     reducers: {
-        reset: (state) => initialState
-    }, 
+        reset: (state) => {
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = false;
+            state.message = '';
+        }, 
+        resetProjects: (state) => {
+            state.allProjects = []; 
+            state.userProjects = []; 
+        }
+    },
     extraReducers: {
         [createNewProject.pending]: (state, action) => {
-            state.isLoading = true; 
+            state.isLoading = true;
         },
         [createNewProject.fulfilled]: (state, action) => {
-            state.isLoading = false; 
-            state.isSuccess = true; 
-            state.userProjects.push(action.payload); 
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.userProjects.push(action.payload);
         },
         [createNewProject.rejected]: (state, action) => {
-            state.isLoading = false; 
-            state.isError = true; 
-            state.message = action.payload; 
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
         },
     }
-}); 
+});
 
-const { reducer } = projectSlice; 
+const { reducer } = projectSlice;
 
-export const { reset } = projectSlice.actions; 
+export const { reset, resetProjects } = projectSlice.actions;
 export default reducer; 
