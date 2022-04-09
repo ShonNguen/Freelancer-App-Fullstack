@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 
-
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { reset, createNewProject } from '../slices/projectsSlice';
@@ -75,15 +74,43 @@ export default function TabPanNewProject() {
     } = useSelector((state) => state.projects)
 
     useEffect(() => {
-        dispatch(reset()); 
+        dispatch(reset());
     }, [])
 
+    const toBase64 = (file) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    })
+
+    function projectSubmit(data) {
+        const { title, description, location } = data;
+        let images = [];
+
+        try {
+            files.map(file => {
+                toBase64(file)
+                    .then(image => {
+                        images.push(image);
+                        return images
+                    })
+                    .then(images => {
+                        const newProject = { title, description, location, files: images };
+                        dispatch(createNewProject(newProject));
+                    })
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     function onProjectFormSubmit(data) {
-        const {title, description, location} = data; 
-        const fd = new FormData() ; 
+        const { title, description, location } = data;
+        const fd = new FormData();
         console.log(title);
         fd.append('title', title);
-        fd.append('description', 'description');
+        fd.append('description', description);
         fd.append('location', location);
         files.map(file => {
             fd.append('files', file);
@@ -119,7 +146,7 @@ export default function TabPanNewProject() {
 
                     <Box
                         component='form' encType='multipart/form-data' sx={{ mt: 3 }}
-                        onSubmit={handleSubmit(onProjectFormSubmit)}
+                        onSubmit={handleSubmit(projectSubmit)}
                     >
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>

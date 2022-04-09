@@ -1,11 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { applyForJob } from '../slices/userAuth';
 
 
 //material ui
 import {
     Card, CardHeader, IconButton, Box, CardContent,
-    Typography, CardActions
+    Typography, CardActions, Button
 } from '@mui/material';
 
 //material icons
@@ -19,6 +20,8 @@ export default function CardJobs({ job, ...rest }) {
     const { user } = useSelector((state) => state.auth);
     const role = user.userRole;
 
+    const dispatch = useDispatch();
+
     const { title, description, location, images, updatedAt } = job;
 
     const updateDate = new Date(updatedAt);
@@ -31,14 +34,23 @@ export default function CardJobs({ job, ...rest }) {
         return dDisplay;
     }
 
+    function applyForJob() {
+        dispatch(applyForJob(job));
+    }
+
     return (
         <Card sx={{ maxWidth: 350 }}>
             <CardHeader
                 action={
-                    (role === "admin" || role === 'employer') &&
-                    (<IconButton>
-                        <MoreVertIcon />
-                    </IconButton>)
+                    (role === "admin" || role === 'employer')
+                        ? (<IconButton>
+                            <MoreVertIcon />
+                        </IconButton>)
+                        : (<Button variant='contained' sx={{ borderRadius: 6, p: 1 }}
+                            onClick={applyForJob}
+                        >
+                            Apply
+                        </Button>)
                 }
                 title={title}
                 subheader={

@@ -31,7 +31,12 @@ const userSchema = mongoose.Schema({
         type: String, 
         required: [true]
     },
-
+    // jobApplied: [{
+    //     type: String
+    // }],
+    // comments: [{
+    //     type: String
+    // }]
 }, {
     timestamps: true, 
 })

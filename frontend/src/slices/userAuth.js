@@ -10,7 +10,9 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
-    message: ''
+    message: '',
+    jobApplied: [], 
+    comments: []
 };
 
 export const getAllUsers = createAsyncThunk(
@@ -70,7 +72,8 @@ export const logout = createAsyncThunk(
     "auth/logout",
     async () => {
         await AuthService.logout();
-    });
+});
+
 
 
 
@@ -83,6 +86,14 @@ const authSlice = createSlice({
             state.isSuccess = false;
             state.isError = false;
             state.message = '';
+        },
+        applyForJob: (state, action) => {
+            state.jobApplied.push(action.payload); 
+        }, 
+        jobCompleted: (state, action) => {
+            state.jobApplied.filter(
+                (job) => job.id !== action.payload.id
+            )
         }
     },
     extraReducers: {
@@ -135,5 +146,5 @@ const authSlice = createSlice({
 
 const { reducer } = authSlice;
 
-export const { reset } = authSlice.actions;
+export const { reset, applyForJob, jobCompleted } = authSlice.actions;
 export default reducer;

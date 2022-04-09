@@ -4,6 +4,7 @@ const router = express.Router();
 const { 
     postProject, 
     getAllProjects, 
+    postBaseProject,
     // deleteProject, 
 
     getImage,

@@ -8,7 +8,8 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
-    message: ''
+    message: '',
+    usersApplied: []
 };
 
 export const getAllJobs = createAsyncThunk(
@@ -99,7 +100,15 @@ export const jobSlice = createSlice({
     name: 'job',
     initialState,
     reducers: {
-        reset: (state) => initialState
+        reset: (state) => {
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = false;
+            state.message = '';
+        }, 
+        userApplied: (state, action) => {
+            state.usersApplied.push(action.payload); 
+        }
     }, 
     extraReducers: {
         [getAllJobs.pending]: (state, action) => {

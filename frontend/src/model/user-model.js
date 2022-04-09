@@ -7,7 +7,8 @@ export class User {
         password,
         userGender,
         userRole,
-        //jobApplied = [job id]
+        jobApplied = [], 
+        comments = []
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -16,5 +17,7 @@ export class User {
         this.password = password;
         this.userGender = userGender;
         this.userRole = userRole; 
+        this.jobApplied = jobApplied; 
+        this.comments = comments; 
     }
 }
