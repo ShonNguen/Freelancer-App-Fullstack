@@ -4,11 +4,15 @@ const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
 const mongoClient = new MongoClient(process.env.MONGO_URI);
 
+const Project = require('../models/projectModel'); 
+const User = require('../models/userModel');
 
+
+// POST, route - '/'
 const postProject = async (req, res) => {
     try {
         await upload(req, res);
-        console.log(req.files);
+
 
         if (req.files.length <= 0) {
             return res
@@ -16,9 +20,23 @@ const postProject = async (req, res) => {
                 .send({ message: "You must select at least 1 file." });
         }
 
-        return res.status(200).send({
-            message: "Files have been uploaded.",
-        });
+        // make a new project object; 
+        const { title, description, location } = req.body;
+        const images = []
+        req.files.map(file => {
+            images.push(file.filename); 
+        })
+        console.log(images)
+
+        const project = await Project.create({
+            title, 
+            description, 
+            location, 
+            images, 
+            user: req.user.id
+        })
+
+        return res.status(200).send(project);
 
     } catch (error) {
         console.log(error);

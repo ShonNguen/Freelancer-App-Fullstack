@@ -18,10 +18,9 @@ const projectSchema = mongoose.Schema({
         type: String, 
         required: [true, 'Please add a location']
     },
-    images: {
-        type: [String], 
-        required: [true, 'Please add a images count']
-    },
+    images: [{
+        type: String, 
+    }],
 }, {
     timestamps: true, 
 })
