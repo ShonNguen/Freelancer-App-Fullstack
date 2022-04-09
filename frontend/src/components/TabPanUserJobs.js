@@ -39,7 +39,7 @@ export default function TabPanUserJobs() {
                 .filter(job => job.user === user._id)
                 .map(job => (
                     <Grid item md={4} xs={6} key={job.id}>
-                        <CardJobs job={job} />
+                        <CardJobs job={job} key={job.id}/>
                     </Grid>
                 ))}
             </Grid>

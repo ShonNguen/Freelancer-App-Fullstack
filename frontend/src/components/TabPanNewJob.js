@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDropzone } from 'react-dropzone';
-
+import React from 'react'
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { reset, createNewProject } from '../slices/projectsSlice';
+import { postNewJob } from '../slices/jobsSlice'
 
 //form
 import { useForm } from 'react-hook-form';
@@ -13,56 +10,26 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 //material ui
-import { Container, CssBaseline, Avatar, Box, Typography, Grid, TextField, Button, Card } from '@mui/material';
+import {
+    Container, CssBaseline, Avatar, Box, Typography,
+    Grid, TextField, Button, Card
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 //icons
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 
-const SUPPORTED_FORMAT = ['image/jpg', 'image/jpeg', 'image/png']
 
 const schema = yup.object({
     title: yup.string().required('No title provided!'),
     description: yup.string().required('No description provided!'),
     location: yup.string().required('No location provided!'),
-    // images: yup
-    //     .mixed()
-    //     .required('Please provide images!')
-    // .test("fileFormat",
-    //     "Unsupported Format",
-    //     value => value && SUPPORTED_FORMAT.includ    es(value.type)),
+    images: yup.number().required('Please specify N. of images'),
 }).required();
 
-const Input = styled('input')({
-    display: 'none',
-});
 
-export default function TabPanelsFreelancer() {
-    const [files, setFiles] = useState([]);
-    //img
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: "image/*",
-        onDrop: (acceptedFiles) => {
-            setFiles(
-                acceptedFiles.map((file) =>
-                    Object.assign(file, {
-                        preview: URL.createObjectURL(file),
-                    })
-                )
-            )
-        },
-    })
 
-    const images = files.map((file) => (
-        <Grid item xs={4} key={file.name}>
-            <div >
-                <div>
-                    <img src={file.preview} style={{ height: "100px", maxWidth: '165px' }} alt="preview" />
-                </div>
-            </div>
-        </Grid>
-    ))
-    //form
+export default function TabPanNewJob() {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
@@ -74,22 +41,16 @@ export default function TabPanelsFreelancer() {
         isLoading, isError, isSuccess, message
     } = useSelector((state) => state.projects)
 
-    // useEffect(() => {
-    //     dispatch(reset());
-    // }, [isError, isSuccess, message, dispatch]);
-
-    function onProjectFormSubmit(data) {
-        const {title, description, location} = data; 
-        const newProject = {
-            title, 
-            description, 
-            location, 
-            images: files
-        }; 
-        dispatch(createNewProject(newProject));
-
+    function onJobSubmit(data) {
+        const { title, description, location, images } = data;
+        const newJob = {
+            title,
+            description,
+            location,
+            images
+        }
+        dispatch(postNewJob(newJob));
     }
-
 
     return (
         <Container component='main' maxWidth='sm'>
@@ -107,15 +68,15 @@ export default function TabPanelsFreelancer() {
                         <FileCopyIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5" >
-                        Create a new Project
+                        Create a new Job
                     </Typography>
 
                     <Box
                         component='form' encType='multipart/form-data' sx={{ mt: 3 }}
-                        onSubmit={handleSubmit(onProjectFormSubmit)}
+                        onSubmit={handleSubmit(onJobSubmit)}
                     >
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12} >
                                 <TextField
                                     autoComplete='title'
                                     name='title'
@@ -141,6 +102,19 @@ export default function TabPanelsFreelancer() {
                                     helperText={errors?.location ? errors.location.message : null}
                                 />
                             </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    autoComplete='images'
+                                    name='images'
+                                    fullWidth
+                                    id='images'
+                                    label='N. of images'
+                                    autoFocus
+                                    {...register('images')}
+                                    error={!!errors?.images}
+                                    helperText={errors?.images ? errors.images.message : null}
+                                />
+                            </Grid>
                             <Grid item xs={12} >
                                 <TextField
                                     autoComplete='description'
@@ -155,28 +129,13 @@ export default function TabPanelsFreelancer() {
                                     helperText={errors?.description ? errors.description.message : null}
                                 />
                             </Grid>
-                            <Grid item xs={12}
-                                sx={{
-                                    border: 0.5,
-                                    borderColor: '#bdbdbd', borderStyle: 'dashed', borderRadius: 3,
-                                    ml: 2, mt: 2
-                                }}>
-                                <Box component='div' {...getRootProps()}>
-                                    <input {...getInputProps()} />
-                                    <Typography variant='h6'>
-                                        Drop your images here or click on the filed
-                                    </Typography>
-                                    <Grid container>
-                                        {images}
-                                    </Grid>
-                                </Box>
-                            </Grid>
 
                             <Grid item xs={12}>
                                 <Button fullWidth variant="contained" type='submit'>
                                     Submit
                                 </Button>
                             </Grid>
+
                         </Grid>
                     </Box>
                 </Box>

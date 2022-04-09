@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const createNewProject = createAsyncThunk(
-    'projects/createProject',
+    'projects/create',
     async (projectData, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;

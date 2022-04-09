@@ -9,8 +9,8 @@ const {
 const { protect } = require('../middleware/auth.middleware');
 
 
-router.route('/').post(protect, postProject); 
 router.route('/all').get(getProjects);
+router.route('/').post(protect, postProject); 
 // router.route('files/:id').delete(deleteProject);
 
 module.exports = router; 

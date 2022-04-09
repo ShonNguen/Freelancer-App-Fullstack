@@ -30,8 +30,6 @@ const postNewJob = async (jobData, token) => {
     return response.data;
 }
 
-
-
 const updateJob = async (jobId, jobData, token) => {
     const config = {
         headers: {
