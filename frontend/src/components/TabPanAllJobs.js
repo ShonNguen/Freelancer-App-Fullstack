@@ -36,8 +36,8 @@ export default function TabPanAllJobs() {
             <CssBaseline />
             <Grid container spacing={2}>
                 {allJobs.map(job => (
-                    <Grid item md={4} xs={6} key={job.id}>
-                        <CardJobs job={job} key={job.id}/>
+                    <Grid item md={4} xs={6} key={job._id}>
+                        <CardJobs job={job} key={job._id}/>
                     </Grid>
                 ))}
             </Grid>

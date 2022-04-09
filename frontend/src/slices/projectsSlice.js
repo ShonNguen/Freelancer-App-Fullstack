@@ -28,6 +28,22 @@ export const createNewProject = createAsyncThunk(
     }
 );
 
+export const getAllProjects = createAsyncThunk(
+    'project/getAll',
+    async (_, thunkAPI) => {
+        try {
+            return await projectService.getAllProjects();
+        } catch (error) {
+            const message = (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+);
+
 export const projectSlice = createSlice({
     name: 'project',
     initialState,
@@ -37,10 +53,10 @@ export const projectSlice = createSlice({
             state.isSuccess = false;
             state.isError = false;
             state.message = '';
-        }, 
+        },
         resetProjects: (state) => {
-            state.allProjects = []; 
-            state.userProjects = []; 
+            state.allProjects = [];
+            state.userProjects = [];
         }
     },
     extraReducers: {
@@ -53,6 +69,19 @@ export const projectSlice = createSlice({
             state.userProjects.push(action.payload);
         },
         [createNewProject.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
+        },
+        [getAllProjects.pending]: (state, action) => {
+            state.isLoading = true;
+        },
+        [getAllProjects.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.allProjects = action.payload;
+        },
+        [getAllProjects.rejected]: (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload;

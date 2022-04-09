@@ -2,6 +2,12 @@ import axios from 'axios';
 
 const API_URL = 'projects/';
 
+const getAllProjects = async () => {
+
+    const response = await axios.get(API_URL + 'all');
+    return response.data;
+}
+
 const postNewProject = async (projectData, token) => {
     const config = {
         headers: {
@@ -14,8 +20,11 @@ const postNewProject = async (projectData, token) => {
     return response.data;
 }
 
+
+
 const projectService = {
     postNewProject,
+    getAllProjects,
 }
 
 export default projectService; 

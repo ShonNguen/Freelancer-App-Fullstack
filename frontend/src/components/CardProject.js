@@ -10,10 +10,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
-import ae from '../img/Porto_AE.jpg';
+function ProjectCard({ project }) {
+    const date = new Date(project.createdAt);
+    const dateOfRegistry = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`;
 
-
-function ProjectCard() {
 
     return (
         <Card sx={{
@@ -25,19 +25,17 @@ function ProjectCard() {
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title='Porto'
-                subheader='September 14, 2016'
+                title={project.title}
+                subheader={dateOfRegistry}
             />
-            <CardMedia
+            {/* <CardMedia
                 component="img"
                 height="194"
-                image={ae}
-            />
+                image={project.images[0]}
+            /> */}
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
+                    {project.description}
                 </Typography>
             </CardContent>
 

@@ -4,12 +4,16 @@ const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
 const mongoClient = new MongoClient(process.env.MONGO_URI);
 
-const Project = require('../models/projectModel'); 
+const Project = require('../models/projectModel');
 const User = require('../models/userModel');
+
+const asyncHandler = require('express-async-handler');
+const { json } = require("body-parser");
+
 
 
 // POST, route - '/'
-const postProject = async (req, res) => {
+const postProject = asyncHandler(async (req, res) => {
     try {
         await upload(req, res);
 
@@ -24,15 +28,15 @@ const postProject = async (req, res) => {
         const { title, description, location } = req.body;
         const images = []
         req.files.map(file => {
-            images.push(file.filename); 
+            images.push(file.filename);
         })
         console.log(images)
 
         const project = await Project.create({
-            title, 
-            description, 
-            location, 
-            images, 
+            title,
+            description,
+            location,
+            images,
             user: req.user.id
         })
 
@@ -50,7 +54,7 @@ const postProject = async (req, res) => {
             message: `Error when trying upload many files: ${error}`,
         });
     }
-};
+});
 
 let gfs;
 const conn = mongoose.createConnection(process.env.MONGO_URI);
@@ -58,6 +62,12 @@ conn.once('open', () => {
     // Init stream
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection('projects');
+});
+
+//get all projects as json 
+const getAllProjects = asyncHandler(async (req, res) => {
+    const projects = await Project.find();
+    res.status(200).json(projects);
 });
 
 const getProjects = async (req, res) => {
@@ -82,8 +92,29 @@ const deleteProject = async (req, res) => {
     });
 }
 
+const getImage = asyncHandler(async (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exists'
+            });
+        }
+
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exists'
+            });
+        }
+        // File exists
+        return res.json(file);
+    });
+}); 
+
 module.exports = {
     postProject,
+    getAllProjects,
     getProjects,
-    deleteProject
+    deleteProject,
+
+    getImage
 };

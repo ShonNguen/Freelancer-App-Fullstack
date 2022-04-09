@@ -4,6 +4,7 @@ export class Job{
         description, 
         location,
         images, 
+        //applied = [user_id]
     ) {
         this.title = title; 
         this.description = description; 

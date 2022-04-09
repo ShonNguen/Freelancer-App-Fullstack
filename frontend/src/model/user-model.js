@@ -7,6 +7,7 @@ export class User {
         password,
         userGender,
         userRole,
+        //jobApplied = [job id]
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
