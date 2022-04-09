@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { postNewJob } from '../slices/jobsSlice'
+import { postNewJob, reset } from '../slices/jobsSlice'
 
 //form
 import { useForm } from 'react-hook-form';
@@ -39,7 +39,11 @@ export default function TabPanNewJob() {
     const { user } = useSelector((state) => state.auth);
     const {
         isLoading, isError, isSuccess, message
-    } = useSelector((state) => state.projects)
+    } = useSelector((state) => state.jobs);
+
+    useEffect(() => {
+        dispatch(reset()); 
+    },[]); 
 
     function onJobSubmit(data) {
         const { title, description, location, images } = data;
@@ -70,6 +74,12 @@ export default function TabPanNewJob() {
                     <Typography component="h1" variant="h5" >
                         Create a new Job
                     </Typography>
+                    {isSuccess && (
+                        <Typography component="h2" variant="h5" color='secondary.main'>
+                            Job Created Successfully
+                        </Typography>
+                    )}
+                    {/* {isSuccess && dispatch(reset())} */}
 
                     <Box
                         component='form' encType='multipart/form-data' sx={{ mt: 3 }}

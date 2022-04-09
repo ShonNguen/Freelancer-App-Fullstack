@@ -3,11 +3,11 @@ export class Project{
         title, 
         description, 
         location,
-        images = [], 
+        files = [], 
     ) {
         this.title = title; 
         this.description = description; 
         this.location = location; 
-        this.images = images; 
+        this.files = files; 
     }
 };

@@ -30,7 +30,7 @@ const schema = yup.object({
     //     .required('Please provide images!')
     // .test("fileFormat",
     //     "Unsupported Format",
-    //     value => value && SUPPORTED_FORMAT.includ    es(value.type)),
+    //     value => value && SUPPORTED_FORMAT.includes(value.type)),
 }).required();
 
 const Input = styled('input')({
@@ -80,14 +80,16 @@ export default function TabPanelsFreelancer() {
 
     function onProjectFormSubmit(data) {
         const {title, description, location} = data; 
-        const newProject = {
-            title, 
-            description, 
-            location, 
-            images: files
-        }; 
-        dispatch(createNewProject(newProject));
-
+        const fd = new FormData() ; 
+        console.log(title);
+        fd.append('title', title);
+        fd.append('description', 'description');
+        fd.append('location', location);
+        files.map(file => {
+            fd.append('files', file);
+        });
+        console.log(fd.get('files'));
+        dispatch(createNewProject(fd));
     }
 
 

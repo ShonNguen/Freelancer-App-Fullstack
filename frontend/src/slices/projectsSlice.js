@@ -16,7 +16,7 @@ export const createNewProject = createAsyncThunk(
     async (projectData, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await projectService.postNewJob(projectData, token);
+            return await projectService.postNewProject(projectData, token);
         } catch (error) {
             const message = (error.response &&
                 error.response.data &&
