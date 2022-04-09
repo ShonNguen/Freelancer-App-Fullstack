@@ -77,12 +77,17 @@ export default function TabPanNewProject() {
         dispatch(reset());
     }, [])
 
-    const toBase64 = (file) => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    })
+
+
+    function submitProjectTest(data) {
+        const reader = new FileReader()
+        const { title, description, location } = data;
+        reader.onloadend = () => {
+            console.log('RESULT', reader.result)
+
+        }
+        reader.readAsDataURL(files[0]);
+    }
 
     function onProjectFormSubmit(data) {
         const { title, description, location } = data;
