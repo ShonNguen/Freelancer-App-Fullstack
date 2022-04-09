@@ -22,13 +22,14 @@ const buttons = {
 
 
 export default function Header() {
+
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     function handleLogout() {
         dispatch(logout());
-        dispatch(reset()); 
-
+        dispatch(reset());
     }
 
     return (
@@ -37,16 +38,27 @@ export default function Header() {
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     {user
                         ? <Box sx={{ flex: 1, display: 'flex' }} >
-                            <Button variant='contained' sx={{ ...buttons, bgcolor: 'secondary.main', ml: 1, mr: 1 }}>
+                            <Button
+                                variant='contained'
+                                sx={{ ...buttons, bgcolor: 'secondary.main', ml: 1, mr: 1 }}
+                                onClick={() => { navigate('/all-projects') }}
+                            >
                                 Dashboard
                             </Button>
-                            <Button variant='contained' sx={{ ...buttons, bgcolor: 'white', color: '#212121', ml: 1, mr: 1 }}>
+                            <Button
+                                variant='contained'
+                                sx={{ ...buttons, bgcolor: 'white', color: '#212121', ml: 1, mr: 1 }}
+                                onClick={() => { navigate('/all-jobs') }}
+                            >
                                 Jobs
                             </Button>
                         </Box>
                         : <Box sx={{ flex: 1 }} />
                     }
-                    <Link to='/' style={{ textDecoration: 'none' }}>
+                    <Link
+                        to={user ? '/profile' : '/'}
+                        style={{ textDecoration: 'none' }}
+                    >
                         <Typography
                             variant="h6"
                             color="common.white"

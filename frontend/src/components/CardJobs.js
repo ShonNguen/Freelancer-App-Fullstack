@@ -1,10 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 
 //material ui
-import { 
-    Card, CardHeader, IconButton, Box, CardContent, 
-    Typography, CardActions 
+import {
+    Card, CardHeader, IconButton, Box, CardContent,
+    Typography, CardActions
 } from '@mui/material';
 
 //material icons
@@ -13,7 +14,11 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import ImageIcon from '@mui/icons-material/Image';
 
+
 export default function CardJobs({ job, ...rest }) {
+    const { user } = useSelector((state) => state.auth);
+    const role = user.userRole;
+
     const { title, description, location, images, updatedAt } = job;
 
     const updateDate = new Date(updatedAt);
@@ -30,9 +35,10 @@ export default function CardJobs({ job, ...rest }) {
         <Card sx={{ maxWidth: 350 }}>
             <CardHeader
                 action={
-                    <IconButton>
+                    (role === "admin" || role === 'employer') &&
+                    (<IconButton>
                         <MoreVertIcon />
-                    </IconButton>
+                    </IconButton>)
                 }
                 title={title}
                 subheader={
@@ -50,7 +56,7 @@ export default function CardJobs({ job, ...rest }) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <ImageIcon color="disabled"/>
+                <ImageIcon color="disabled" />
                 <Typography variant="body2" color="text.secondary" sx={{ mr: 1, ml: 1 }}>
                     {`N. of images ${images}`}
                 </Typography>

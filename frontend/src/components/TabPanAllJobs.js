@@ -32,7 +32,7 @@ export default function TabPanAllJobs() {
     }, [dispatch, user, isError, navigate]);
 
     return (
-        <Container>
+        <Container sx={{mt:4 , mb: 4}}>
             <CssBaseline />
             <Grid container spacing={2}>
                 {allJobs.map(job => (

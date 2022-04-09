@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 //components
 import TabPanAllProjects from './TabPanAllProjects';
 import TabPanNewProject from './TabPanNewProject'; 
+import TabPanUserProjects from './TabPanUserProjects';
 
 
 function TabPanel(props) {
@@ -57,13 +58,13 @@ export default function TabPanelsEmployer() {
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant='fullWidth'>
-                    <Tab label="All Projects" {...a11yProps(0)} />
+                    <Tab label="User Projects" {...a11yProps(0)} />
                     <Tab label="Applied Jobs" {...a11yProps(1)} />
                     <Tab label="Post new Project" {...a11yProps(2)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-                <TabPanAllProjects />
+                <TabPanUserProjects />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <TabPanNewProject />
