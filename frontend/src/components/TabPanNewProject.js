@@ -84,27 +84,6 @@ export default function TabPanNewProject() {
         reader.onerror = error => reject(error);
     })
 
-    function projectSubmit(data) {
-        const { title, description, location } = data;
-        let images = [];
-
-        try {
-            files.map(file => {
-                toBase64(file)
-                    .then(image => {
-                        images.push(image);
-                        return images
-                    })
-                    .then(images => {
-                        const newProject = { title, description, location, files: images };
-                        dispatch(createNewProject(newProject));
-                    })
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     function onProjectFormSubmit(data) {
         const { title, description, location } = data;
         const fd = new FormData();
@@ -146,7 +125,7 @@ export default function TabPanNewProject() {
 
                     <Box
                         component='form' encType='multipart/form-data' sx={{ mt: 3 }}
-                        onSubmit={handleSubmit(projectSubmit)}
+                        onSubmit={handleSubmit(onProjectFormSubmit)}
                     >
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
