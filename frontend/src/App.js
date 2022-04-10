@@ -11,6 +11,7 @@ import UserLoginPage from './pages/UserLoginPage';
 import AllJobs from './pages/AllJobs';
 import { Box } from '@mui/material';
 import AllProjects from './pages/AllProjects';
+import DeleteCompleted from './pages/DeleteCompleted'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                     </Route>
                     <Route path='/login' element={<UserLoginForm />} />
                     <Route path='/profile' element={<UserLoginPage />} />
+                    <Route path='/deleteSuccess' element={<DeleteCompleted />} />
                     <Route path='/all-jobs' element={<AllJobs />} />
                     <Route path='/all-projects' element={<AllProjects />} />
                 </Routes>

@@ -84,7 +84,7 @@ export const deleteJob = createAsyncThunk(
     async (id, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await jobService.postNewJob(id, token);
+            return await jobService.deleteJob(id, token);
         } catch (error) {
             const message = (error.response &&
                 error.response.data &&

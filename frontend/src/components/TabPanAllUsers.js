@@ -42,9 +42,6 @@ export default function TabPanAllUsers() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox />
-                </TableCell>
                 <TableCell component="th" scope="row" padding="none" >
                   <Typography variant="subtitle1" noWrap >
                     Name
@@ -80,9 +77,6 @@ export default function TabPanAllUsers() {
                   const { _id, firstName, lastName, username, email, userGender, userRole } = curUser;
                   return (
                     <TableRow hover key={_id} tabIndex={-1} role='checkbox' >
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
                       <TableCell component="th" scope="row" padding="none">
                         <Typography variant="subtitle2" noWrap>
                           {`${firstName} ${lastName}`}
@@ -92,7 +86,7 @@ export default function TabPanAllUsers() {
                       <TableCell align="left">{email}</TableCell>
                       <TableCell align="left">{userRole}</TableCell>
                       <TableCell align="left">{userGender}</TableCell>
-                      <TableCell align="right"><UserMoreMenu /></TableCell>
+                      {/* <TableCell align="right"><UserMoreMenu /></TableCell> */}
                     </TableRow>
                   );
                 })

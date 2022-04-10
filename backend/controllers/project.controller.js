@@ -15,7 +15,7 @@ const { json } = require("body-parser");
 // POST, route - '/'
 const postProject = asyncHandler(async (req, res) => {
     try {
-        await upload(req, res);
+        await upload(req, res); 
 
 
         if (req.files.length <= 0) {
@@ -57,9 +57,13 @@ const postProject = asyncHandler(async (req, res) => {
 });
 
 let gfs;
+let gridfsBucket; 
 const conn = mongoose.createConnection(process.env.MONGO_URI);
 conn.once('open', () => {
     // Init stream
+    gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'projects'
+    })
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection('projects');
 });
@@ -106,7 +110,10 @@ const getImage = asyncHandler(async (req, res) => {
             });
         }
         // File exists
-        return res.json(file);
+        const readStream = gridfsBucket.openDownloadStream(file.id)
+        // const readStream = gridfsBucket.createReadStream(file.filename); 
+        readStream.pipe(res); 
+
     });
 }); 
 
@@ -115,6 +122,5 @@ module.exports = {
     getAllProjects,
     getProjects,
     deleteProject,
-
     getImage
 };

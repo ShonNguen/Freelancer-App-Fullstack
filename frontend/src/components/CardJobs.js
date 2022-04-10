@@ -1,6 +1,8 @@
 import React from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { applyForJob } from '../slices/userAuth';
+import { useNavigate } from 'react-router-dom';
 
 
 //material ui
@@ -14,13 +16,15 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import ImageIcon from '@mui/icons-material/Image';
+import UserMoreMenu from './UserMoreMenu';
 
 
-export default function CardJobs({ job, ...rest }) {
+export default function CardJobs({ job,  ...rest }) {
     const { user } = useSelector((state) => state.auth);
     const role = user.userRole;
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { title, description, location, images, updatedAt } = job;
 
@@ -36,16 +40,17 @@ export default function CardJobs({ job, ...rest }) {
 
     function applyForJob() {
         dispatch(applyForJob(job));
+        
     }
 
     return (
-        <Card sx={{ maxWidth: 350 }}>
+        <Card sx={{ maxWidth: 350, height: 352 }}>
             <CardHeader
                 action={
                     (role === "admin" || role === 'employer')
-                        ? (<IconButton>
-                            <MoreVertIcon />
-                        </IconButton>)
+                        ? (
+                            <UserMoreMenu job={job} />
+                        )
                         : (<Button variant='contained' sx={{ borderRadius: 6, p: 1 }}
                             onClick={applyForJob}
                         >

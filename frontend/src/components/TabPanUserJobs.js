@@ -29,7 +29,7 @@ export default function TabPanUserJobs() {
 
         dispatch(getAllJobs());
 
-    }, [dispatch, user, isError, navigate]);
+    }, [ dispatch, user, isError, navigate ]);
 
     return (
         <Container>

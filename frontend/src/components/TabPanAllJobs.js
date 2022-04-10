@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { getAllJobs } from '../slices/jobsSlice';
@@ -10,6 +10,7 @@ import CardJobs from './CardJobs';
 import { Container, CssBaseline, Grid } from '@mui/material';
 
 export default function TabPanAllJobs() {
+    const [toUpdate, setToUpdate] = useState(''); 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ export default function TabPanAllJobs() {
 
         dispatch(getAllJobs());
 
-    }, [dispatch, user, isError, navigate]);
+    }, [dispatch, user, isError, navigate, toUpdate]);
 
     return (
         <Container sx={{mt:4 , mb: 4}}>
@@ -37,7 +38,7 @@ export default function TabPanAllJobs() {
             <Grid container spacing={2}>
                 {allJobs.map(job => (
                     <Grid item md={4} xs={6} key={job._id}>
-                        <CardJobs job={job} key={job._id}/>
+                        <CardJobs job={job} key={job._id} setToUpdate={setToUpdate} />
                     </Grid>
                 ))}
             </Grid>

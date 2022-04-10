@@ -11,6 +11,7 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+// app.use('/projects', express.static('projects')); 
 // app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/jobs', require('./routes/jobs.routes'));
