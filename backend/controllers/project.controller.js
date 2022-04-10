@@ -96,7 +96,32 @@ const deleteProject = async (req, res) => {
     });
 }
 
+
 const getImage = asyncHandler(async (req, res) => {
+    const filename = req.params.filename; 
+    let gridfsBucketTest; 
+    let gfsTest = Grid(mongoose.connection.db, mongoose.mongo); 
+    gridfsBucketTest = new mongoose.mongo.GridFSBucket(gfsTest.db, {
+        bucketName: 'projects'
+    }); 
+
+    gfsTest = Grid(gfsTest.db, mongoose.mongo); 
+    gfsTest.collection('projects'); 
+
+    gfsTest.files.findOne({ filename: filename}, (err, file) => {
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exists'
+            });
+        }
+
+        const readStream = gridfsBucket.openDownloadStream(file._id); 
+        readStream.pipe(res); 
+    })
+});
+
+
+const getImage02 = asyncHandler(async (req, res) => {
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
         if (!file || file.length === 0) {
             return res.status(404).json({
@@ -104,11 +129,6 @@ const getImage = asyncHandler(async (req, res) => {
             });
         }
 
-        if (!file || file.length === 0) {
-            return res.status(404).json({
-                err: 'No file exists'
-            });
-        }
         // File exists
         const readStream = gridfsBucket.openDownloadStream(file.id)
         // const readStream = gridfsBucket.createReadStream(file.filename); 

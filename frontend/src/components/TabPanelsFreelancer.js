@@ -59,17 +59,17 @@ export default function TabPanelsEmployer() {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant='fullWidth'>
                     <Tab label="User Projects" {...a11yProps(0)} />
-                    <Tab label="Applied Jobs" {...a11yProps(1)} />
-                    <Tab label="Post new Project" {...a11yProps(2)} />
+                    {/* <Tab label="Applied Jobs" {...a11yProps(1)} /> */}
+                    <Tab label="Post new Project" {...a11yProps(1)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
                 <TabPanUserProjects />
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            {/* <TabPanel value={value} index={1}>
                 <TabPanNewProject />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
+            </TabPanel> */}
+            <TabPanel value={value} index={1}>
                 <TabPanNewProject />
             </TabPanel>
         </Box>
