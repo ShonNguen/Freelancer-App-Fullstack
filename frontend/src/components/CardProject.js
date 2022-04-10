@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
@@ -9,13 +9,13 @@ import { Typography } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
+import { getImage } from '../service/projects.service';
+
 function ProjectCard({ project }) {
     const date = new Date(project.createdAt);
     const dateOfRegistry = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`;
-    const image = `http://localhost:8080/api/projects/file/${project.images[0]}`; 
-    console.log(image); 
-
-
+    const imgUrl = `http://localhost:8080/api/projects/file/${project.images[0]}`
+    // const imageurl = getImage(project.images[0]);
     return (
         <Card sx={{
             maxWidth: 345
@@ -29,13 +29,8 @@ function ProjectCard({ project }) {
                 title={project.title}
                 subheader={dateOfRegistry}
             />
-            <CardMedia
-                component="img"
-                height="194"
-                wide
-                imageUrl = {image}
-            />
             <CardContent>
+                <img src={imgUrl} alt="image" width='345' height='240'/>
                 <Typography variant="body2" color="text.secondary">
                     {project.description}
                 </Typography>

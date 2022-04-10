@@ -44,6 +44,22 @@ export const getAllProjects = createAsyncThunk(
     }
 );
 
+// export const getImage = createAsyncThunk(
+//     'project/getImage',
+//     async (filename, thunkAPI) => {
+//         try {
+//             return await projectService.getImage(filename);
+//         } catch (error) {
+//             const message = (error.response &&
+//                 error.response.data &&
+//                 error.response.data.message) ||
+//                 error.message ||
+//                 error.toString()
+//             return thunkAPI.rejectWithValue(message)
+//         }
+//     }
+// )
+
 export const projectSlice = createSlice({
     name: 'project',
     initialState,
